@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM 2nd Project</title>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: Helvetica;
+    }
+
+    body {
+      background: #fbf9f7;
+      color: #333368;
+
+      /* imp --> stops overflow in y direction */
+      overscroll-behavior-y: none;
+    }
+    section {
+      border: 1px solid blue;
+      margin-bottom: 20px;
+      padding: 20px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    hr {
+      margin-bottom: 20px;
+      border: 1px solid red;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    h5 {
+      margin-bottom: 5px;
+    }
+
+    input {
+      height: 40px;
+      width: 300px;
+      text-align: center;
+
+      background: #fff;
+      border: 1px solid #cecedf;
+      box-shadow: 0 1px 2px rgb(16 24 40 / 5%);
+      border-radius: 8px;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 24px;
+      letter-spacing: -0.02em;
+      color: #333368;
+      /* padding: 22px 16px 10px; */
+    }
+
+    input::placeholder {
+      color: #333368;
+    }
+
+    button {
+      color: rgb(0, 0, 66);
+      background-color: rgb(17, 218, 172);
+      border-radius: 100px;
+      height: 40px;
+      width: 300px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #withdrawalWarning,
+    #formWarning {
+      color: red;
+    }
+
+    #formSuccess {
+      color: green;
+    }
+
+    #todoItemsList {
+      width: 800px;
+      height: 200px;
+      border: 1px solid black;
+      overflow: scroll;
+    }
+
+    #todoItemsList {
+      padding: 20px;
+    }
+
+    #changeColorBody,
+    #moveImageBody {
+      width: 800px;
+      height: 600px;
+      border: 1px solid black;
+      position: relative;
+    }
+
+    #randomDogImage {
+      height: 200px;
+      width: 250px;
+      position: absolute;
+    }
+
+    #invertedTriangleOuter {
+      width: 500px;
+      height: 500px;
+      background: black;
+      border: 1px solid white;
+      color: white;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      overflow: scroll;
+    }
+
+    #highlightWordsPara {
+      width: 500px;
+      height: 500px;
+      border: 1px solid black;
+      padding: 20px 16px;
+    }
+
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 8px;
+      background: linear-gradient(to right, #ff5f6d, #ffc371);
+      width: 0%;
+
+      transition: width 0.2s ease-out;
+
+      border-radius: 10px;
+    }
+
+    #listItems {
+      height: 500px;
+      width: 500px;
+      border: 1px solid black;
+      overflow: scroll;
+      padding: 20px 16px;
+    }
+
+    #myList {
+      list-style: none;
+      background: #f5f5ff;
+      border: 1px solid #737397;
+      padding: 10px 20px;
+      text-align: center;
+    }
+
+    .highlight {
+      background-color: yellow;
+    }
+  </style>
+  <body>
+    <div id="main">
+      <section>
+        <h1>1) Password Validator</h1>
+        <input
+          type="password"
+          id="password-field"
+          placeholder="Enter Password"
+        />
+        <input
+          type="password"
+          id="confirm-password"
+          placeholder="Confirm Password"
+        />
+        <button id="submit-button">Submit</button>
+      </section>
+      <hr />
+      <section>
+        <h1>2) Calculator</h1>
+        <input id="num1" placeholder="First Number" />
+        <input id="num2" placeholder="Second Number" />
+        <input id="operator" placeholder="Enter Operator" />
+        <button id="calculate">Calculate</button>
+        <input id="result" placeholder="Result" disabled />
+      </section>
+      <hr />
+      <section>
+        <h1>3) Color Mixer</h1>
+        <input id="color1" placeholder="Color 1" />
+        <input id="color2" placeholder="Color 2" />
+        <button id="mixColor">Mix Color</button>
+        <input id="finalColor" placeholder="Final Color" disabled />
+      </section>
+      <hr />
+      <section>
+        <h1>4) Highest Marks</h1>
+        <h4>Please Enter 5 numbers(comma seperated)</h4>
+        <input id="marks" placeholder="Marks" />
+        <button id="findHighest">Calculate</button>
+        <input id="highestMark" placeholder="Highest Mark" disabled />
+      </section>
+      <hr />
+      <section>
+        <h1>5) Capitalize</h1>
+        <input id="name" placeholder="Name" />
+        <button id="capitalize">Capitalize</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>6) Vowel Counter</h1>
+        <input id="personName" placeholder="Name" />
+        <button id="countVowels">Count vowels</button>
+        <input id="vowelsCount" placeholder="Vowels" disabled />
+      </section>
+      <hr />
+
+      <section>
+        <h1>7) Remove Duplicates</h1>
+        <h3>Enter Cart Items (comma seperated)</h3>
+        <input id="cartValues" placeholder="Cart Values" />
+        <button id="removeDuplicates">Remove Duplicates</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>8. Inverted right-angled triangle pattern with asterisks</h1>
+        <div id="invertedTriangleOuter">
+          <div id="invertedTriangle"></div>
+        </div>
+
+        <button onclick="triangle()">Click</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>9. Check for divisibility</h1>
+        <input id="enterNumbers" placeholder="Enter Numbers" />
+        <button id="divisibility">Divisible by 3, but not by 2.</button>
+        <input
+          id="divisibleby3"
+          placeholder="Divisible by 3, but not by 2."
+          disabled
+        />
+      </section>
+      <hr />
+
+      <section>
+        <h1>10. Correct a bug</h1>
+        <h3>Enter Values (comma seperated)</h3>
+        <input type="text" placeholder="Enter Values" id="correctABugInput" />
+        <button id="correctBug">Correct the bug</button>
+        <input
+          type="text"
+          placeholder="Valid Values"
+          id="correctABugOutput"
+          disabled
+        />
+      </section>
+      <hr />
+
+      <section>
+        <h1>11. Unit converter</h1>
+        <input id="celsius" placeholder="Enter value in Celsius" />
+        <button id="convert">Convert to Fahrenheit</button>
+        <input id="fahrenheit" placeholder="Fahrenheit value" disabled />
+      </section>
+      <hr />
+
+      <section>
+        <h1>12. Calculate rental cost</h1>
+        <h3>Car type can be Economy,Midsize,Luxury</h3>
+        <input id="carType" placeholder="Enter Car Type" />
+        <input id="daysRented" placeholder="Number of days rented" />
+        <button id="calculateCost">Calculate Cost</button>
+        <input id="totalCost" placeholder="Total Cost" disabled />
+      </section>
+      <hr />
+
+      <section>
+        <h1>13. Bill splitter</h1>
+        <h3>Enter Prices(comma seperated)</h3>
+        <input type="text" id="billSplitterInput" placeholder="Enter Prices" />
+        <input id="totalPeople" placeholder="Enter Total People" />
+        <button id="calculateBill">Calculate Bill</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>14. Calculate the final order price</h1>
+        <button id="calculateCartCost">Calculate Cart Cost</button>
+        <input id="totalCartCost" placeholder="Total Cart Cost" disabled />
+      </section>
+      <hr />
+
+      <section>
+        <h1>15. Calculate the percentage of the discount</h1>
+        <input id="originalPrice" placeholder="Original Price" />
+        <input id="discountedPrice" placeholder="Discounted Price" />
+        <input
+          id="discountPercentage"
+          placeholder="Percentage of the Discount"
+          disabled
+        />
+        <button id="calculateDiscountedPercentage">
+          Calculate Discount Percentage
+        </button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>16. Generate a random number</h1>
+        <input
+          id="randomNumber"
+          placeholder="Random Number Between 1 and 100"
+          disabled
+        />
+        <button id="generateNumber">Generate Random Number</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>17. Build a banking application</h1>
+        <h3>Customer Name could be Satyam, Shivam, Krishna and Saksham</h3>
+        <input id="enterName" placeholder="Enter Name" />
+        <input id="amount" placeholder="Current Amount" disabled />
+        <input
+          id="enterAmount"
+          placeholder="Enter Amount to be deposited/withdrawaled"
+        />
+        <button id="deposit">Deposit</button>
+        <button id="withdrawal">Withdrawal</button>
+        <p id="withdrawalWarning"></p>
+      </section>
+      <hr />
+
+      <section>
+        <h1>18. Change Text on Button click.</h1>
+        <p id="pwText">The most affordable learning platform</p>
+        <button id="toggleText">Toggle Text</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>19. Validate Password</h1>
+        <input id="formEmail" type="text" placeholder="Enter Email" />
+        <input id="formPassword" type="password" placeholder="Enter Password" />
+        <button id="formSubmit">Submit</button>
+        <p id="formWarning"></p>
+        <p id="formSuccess"></p>
+      </section>
+      <hr />
+
+      <section>
+        <h1>20. Dynamically Adding List Items to an Ordered List</h1>
+        <div id="listItems">
+          <ul id="myList"></ul>
+        </div>
+        <button onclick="addListItem()">Add List Item</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>21. TODO App</h1>
+        <div id="todoItemsList"></div>
+        <input id="todo" type="text" placeholder="Enter Value" />
+        <button id="addItem">ADD</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>22. Progress Bar(on the top of the page)</h1>
+        <div id="progressBar"></div>
+      </section>
+      <hr />
+
+      <section>
+        <h1>23. Change the color on click</h1>
+        <div id="changeColorBody"></div>
+        <button id="changeColor">Change Color</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>24. Text Highlighting</h1>
+        <p id="highlightWordsPara">
+          Lorem Ipsum is simply dummy text of the printing and typesetting
+          industry. Lorem Ipsum has been the industry's standard dummy text ever
+          since the 1500s, when an unknown printer took a galley of type and
+          scrambled it to make a type specimen book. It has survived not only
+          five centuries, but also the leap into electronic typesetting,
+          remaining essentially unchanged. It was popularised in the 1960s with
+          the release of Letraset sheets containing Lorem Ipsum passages, and
+          more recently with desktop publishing software like Aldus PageMaker
+          including versions of Lorem Ipsum.
+        </p>
+        <button id="highlight">Highlight</button>
+      </section>
+      <hr />
+
+      <section>
+        <h1>25. Move the Image</h1>
+
+        <div id="moveImageBody">
+          <img
+            src="https://repository-images.githubusercontent.com/260096455/47f1b200-8b2e-11ea-8fa1-ab106189aeb0"
+            alt="random dog image"
+            id="randomDogImage"
+          />
+        </div>
+      </section>
+      <hr />
+    </div>
+  </body>
+
+  <script src="./index.js"></script>
+</html>
